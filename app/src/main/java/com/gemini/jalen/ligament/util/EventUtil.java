@@ -37,7 +37,7 @@ public class EventUtil {
         }
     }
 
-    public static <T extends Event> void unregister(LifecycleOwner owner, String cls) {
+    public static void unregister(LifecycleOwner owner, String cls) {
         MutableLiveData data = observables.get(cls);
         if (data != null) {
             data.removeObservers(owner);
