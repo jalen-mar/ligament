@@ -24,7 +24,7 @@ import com.gemini.jalen.ligament.util.StatusBarUtil;
 
 public class GeneralFragment<T extends ViewDataBinding> extends PermissionFragment {
     private View contentView;
-    protected T binder;
+    private T binder;
 
     @NonNull
     @Override
@@ -74,6 +74,10 @@ public class GeneralFragment<T extends ViewDataBinding> extends PermissionFragme
 
     protected boolean isSupportDataBinding() {
         return true;
+    }
+
+    protected T getBinder() {
+        return binder;
     }
 
     @MainThread

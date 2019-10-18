@@ -28,7 +28,7 @@ public abstract class GeneralActivity<T extends ViewDataBinding> extends AppComp
     public static final int REQUEST_LOCATION = PermissionFragment.REQUEST_LOCATION;
 
     private View contentView;
-    private T binder;
+    protected T binder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
