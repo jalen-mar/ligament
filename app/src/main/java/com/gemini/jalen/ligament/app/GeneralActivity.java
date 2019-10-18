@@ -28,6 +28,7 @@ public abstract class GeneralActivity<T extends ViewDataBinding> extends AppComp
     public static final int REQUEST_LOCATION = PermissionFragment.REQUEST_LOCATION;
 
     private View contentView;
+    private T binder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,7 +39,9 @@ public abstract class GeneralActivity<T extends ViewDataBinding> extends AppComp
 
     @Override
     protected void onDestroy() {
-        getBinder().unbind();
+        if (binder != null) {
+            binder.unbind();
+        }
         super.onDestroy();
     }
 
@@ -62,7 +65,7 @@ public abstract class GeneralActivity<T extends ViewDataBinding> extends AppComp
     }
 
     protected T getBinder() {
-        return DataBindingUtil.getBinding(contentView);
+        return binder;
     }
 
     protected boolean isSupportDataBinding() {
@@ -122,7 +125,7 @@ public abstract class GeneralActivity<T extends ViewDataBinding> extends AppComp
         if (resId != View.NO_ID) {
             contentView = getLayoutInflater().inflate(getLayout(), parentView, false);
             if (isSupportDataBinding()) {
-                DataBindingUtil.bind(contentView);
+                binder = DataBindingUtil.bind(contentView);
             }
         }
         return contentView;

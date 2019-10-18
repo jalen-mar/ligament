@@ -114,9 +114,8 @@ public abstract class RecyclerAdapter<T, V extends ViewHolder> extends RecyclerV
 
     @Override
     public void clear() {
-        int size = list.size();
         list.clear();
-        notifyItemRangeRemoved(0, size);
+        notifyDataSetChanged();
     }
 
     @Override

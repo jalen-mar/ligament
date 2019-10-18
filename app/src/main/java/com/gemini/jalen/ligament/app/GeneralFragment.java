@@ -24,6 +24,7 @@ import com.gemini.jalen.ligament.util.StatusBarUtil;
 
 public class GeneralFragment<T extends ViewDataBinding> extends PermissionFragment {
     private View contentView;
+    private T binder;
 
     @NonNull
     @Override
@@ -33,7 +34,7 @@ public class GeneralFragment<T extends ViewDataBinding> extends PermissionFragme
         if (resId != View.NO_ID) {
             contentView = inflater.inflate(resId, container, false);
             if (isSupportDataBinding()) {
-                DataBindingUtil.bind(contentView);
+                binder = DataBindingUtil.bind(contentView);
             }
             container.addView(contentView);
             StatusBarUtil.injectStatusView(null, container, contentView, getStatusBackground((ViewGroup) contentView));
@@ -43,7 +44,9 @@ public class GeneralFragment<T extends ViewDataBinding> extends PermissionFragme
 
     @Override
     public void onDestroyView() {
-        getBinder().unbind();
+        if (binder != null) {
+            binder.unbind();
+        }
         super.onDestroyView();
     }
 
@@ -74,7 +77,7 @@ public class GeneralFragment<T extends ViewDataBinding> extends PermissionFragme
     }
 
     protected T getBinder() {
-        return DataBindingUtil.getBinding(contentView);
+        return binder;
     }
 
     @MainThread
