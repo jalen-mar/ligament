@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="unit" format="string" />
+    <attr name="title" format="string" />
+    <attr name="alarm" format="boolean" />
+    <attr name="value" format="float" />
+    <attr name="optimalMax" format="float" />
+    <attr name="optimalMin" format="float" />
+    <attr name="min" format="float" />
+    <attr name="max" format="float" />
+    <attr name="column" format="integer" />
+    <attr name="isEqually" format="boolean" />
+
+    <declare-styleable name="Tachometer">
+        <attr name="max" />
+        <attr name="min" />
+        <attr name="optimalMax" />
+        <attr name="value" />
+        <attr name="optimalMin" />
+        <attr name="alarm" />
+        <attr name="unit" />
+        <attr name="title" />
+    </declare-styleable>
+
+    <declare-styleable name="AutomaticLayout">
+        <attr name="automatic_orientation">
+            <flag name="horizontal" value="0" />
+            <flag name="vertical" value="1" />
+        </attr>
+        <attr name="column" />
+        <attr name="isEqually" />
+    </declare-styleable>
+</resources>
