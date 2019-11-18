@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 public class ListView extends RecyclerView {
-    private MenuInfo info = new MenuInfo();
+    public final MenuInfo info = new MenuInfo();
 
     public ListView(Context context) {
         super(context);
