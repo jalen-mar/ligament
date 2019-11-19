@@ -201,9 +201,15 @@ public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
         return this;
     }
 
-    public ViewHolder setOnClickListener(int viewId, OnClickListener listener) {
+    public <T extends ViewHolder> ViewHolder setOnClickListener(int viewId, OnClickListener<T> listener) {
         this.listener = listener;
         getChild(viewId).setOnClickListener(this);
+        return this;
+    }
+
+    public <T extends ViewHolder> ViewHolder setOnClickListener(OnClickListener<T> listener) {
+        this.listener = listener;
+        itemView.setOnClickListener(this);
         return this;
     }
 
@@ -214,7 +220,7 @@ public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
         }
     }
 
-    public interface OnClickListener {
-        void onClick(ViewHolder holder);
+    public interface OnClickListener<T extends ViewHolder> {
+        void onClick(T holder);
     }
 }

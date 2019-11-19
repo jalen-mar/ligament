@@ -40,7 +40,7 @@ public class ListView extends RecyclerView {
     }
 
     @Override
-    protected ContextMenu.ContextMenuInfo getContextMenuInfo() {
+    public ContextMenu.ContextMenuInfo getContextMenuInfo() {
         return info;
     }
 

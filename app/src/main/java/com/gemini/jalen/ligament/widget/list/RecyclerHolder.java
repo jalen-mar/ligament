@@ -1,6 +1,5 @@
 package com.gemini.jalen.ligament.widget.list;
 
-import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
