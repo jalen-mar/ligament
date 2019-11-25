@@ -13,15 +13,28 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     private SparseArray<View> targetList;
     private SparseArray<View> children;
     private OnClickListener listener;
+    private Map<String, Object> data;
 
     public ViewHolder(@NonNull View itemView) {
         super(itemView);
         targetList = new SparseArray<>();
         children = new SparseArray<>();
+        data = new HashMap<>();
+    }
+
+    public void setData(String key, Object obj) {
+        data.put(key, obj);
+    }
+
+    public <T> T getData(String key) {
+        return (T) data.get(key);
     }
 
     public <T extends View> T getChild(int id) {

@@ -134,12 +134,4 @@ public abstract class GeneralActivity<T extends ViewDataBinding> extends AppComp
     protected void requestPermission(String[] permissions, int requestCode) {
         PermissionFragment.get(this).requestPermission(permissions, requestCode);
     }
-
-    protected boolean usedLocService() {
-        return PermissionFragment.get(this).usedLocService();
-    }
-
-    protected void requestLocService() {
-        PermissionFragment.get(this).requestLocService();
-    }
 }

@@ -1,18 +1,18 @@
 package com.gemini.jalen.ligament.app;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.content.ContentResolver;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Process;
-import android.provider.Settings;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+
+import com.gemini.jalen.ligament.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +20,8 @@ import java.util.List;
 public class PermissionFragment extends LifecycleFragment {
     public static final int REQUEST_INSTALL = 5;
     public static final int REQUEST_LOCATION = 6;
+    public static final int REQUEST_BLUETOOTH = 7;
+    public static final int STATE_BLUETOOTH_OPEN = 8;
     private static final String PERMISSION_FRAGMENT_TAG = "com.gemini.jalen.ligament.permission_fragment";
 
     protected static void injectIfNeededIn(AppCompatActivity activity) {
@@ -40,20 +42,6 @@ public class PermissionFragment extends LifecycleFragment {
             context = getActivity();
         }
         return context;
-    }
-
-    protected boolean usedLocService() {
-        LocationManager manager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        return manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-    }
-
-    protected void requestLocService() {
-        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-        if (!PERMISSION_FRAGMENT_TAG.equals(getTag())) {
-            startActivityForResult(intent, REQUEST_LOCATION);
-        } else {
-            getActivity().startActivityForResult(intent, REQUEST_LOCATION);
-        }
     }
 
     private boolean checkPermission(String permission) {
@@ -106,34 +94,44 @@ public class PermissionFragment extends LifecycleFragment {
     }
 
     public void onPermissionsResult(int requestCode, String[] permissions, int[] result) {
-        getActivity().onRequestPermissionsResult(requestCode,  permissions, result);
-    }
-
-    protected boolean canInstall() {
-        boolean can = true;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            can = getContext().getPackageManager().canRequestPackageInstalls();
-        } else {
-            ContentResolver resolver = getContext().getContentResolver();
-            if (Settings.Secure.getInt(resolver, Settings.Secure.INSTALL_NON_MARKET_APPS, 0) == 0) {
-                Settings.Secure.putInt(resolver, Settings.Secure.INSTALL_NON_MARKET_APPS, 1);
+        switch (requestCode) {
+            case REQUEST_BLUETOOTH: {
+                if (permissions.length == 0) {
+                    checkBluetoothOpen();
+                } else {
+                    onPermissionsResult(STATE_BLUETOOTH_OPEN, new String[]{"您已禁用蓝牙相关权限,无法使用蓝牙功能!"}, result);
+                }
             }
-        }
-        return can;
-    }
-
-    @TargetApi(Build.VERSION_CODES.O)
-    protected void requestInstall() {
-        Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,
-                Uri.parse("package:" + getContext().getPackageName()));
-        if (!PERMISSION_FRAGMENT_TAG.equals(getTag())) {
-            startActivityForResult(intent, REQUEST_INSTALL);
-        } else {
-            getActivity().startActivityForResult(intent, REQUEST_INSTALL);
+            break;
+            default:
+                getActivity().onRequestPermissionsResult(requestCode,  permissions, result);
         }
     }
 
     static PermissionFragment get(AppCompatActivity activity) {
         return (PermissionFragment) activity.getSupportFragmentManager().findFragmentByTag(PERMISSION_FRAGMENT_TAG);
+    }
+
+    //-------------------------------------API------------------------------------
+    protected void checkBluetoothPermission() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            requestPermission(new String []{Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_BLUETOOTH);
+        } else {
+            checkBluetoothOpen();
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private void checkBluetoothOpen() {
+        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        if (adapter == null) {
+            onPermissionsResult(STATE_BLUETOOTH_OPEN, new String[]{"当前设备不支持蓝牙功能!"}, new int[0]);
+        } else {
+            if (adapter.isEnabled()) {
+                adapter.enable();
+            } else {
+                onPermissionsResult(STATE_BLUETOOTH_OPEN, new String[0], new int[0]);
+            }
+        }
     }
 }
