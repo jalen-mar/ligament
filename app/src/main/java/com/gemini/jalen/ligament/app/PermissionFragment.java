@@ -18,10 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PermissionFragment extends LifecycleFragment {
-    public static final int REQUEST_INSTALL = 5;
-    public static final int REQUEST_LOCATION = 6;
-    public static final int REQUEST_BLUETOOTH = 7;
-    public static final int STATE_BLUETOOTH_OPEN = 8;
+    public static final int REQUEST_BLUETOOTH = 5;
+    public static final int STATE_BLUETOOTH_OPEN = 6;
     private static final String PERMISSION_FRAGMENT_TAG = "com.gemini.jalen.ligament.permission_fragment";
 
     protected static void injectIfNeededIn(AppCompatActivity activity) {
@@ -127,7 +125,7 @@ public class PermissionFragment extends LifecycleFragment {
         if (adapter == null) {
             onPermissionsResult(STATE_BLUETOOTH_OPEN, new String[]{"当前设备不支持蓝牙功能!"}, new int[0]);
         } else {
-            if (adapter.isEnabled()) {
+            if (!adapter.isEnabled()) {
                 adapter.enable();
             } else {
                 onPermissionsResult(STATE_BLUETOOTH_OPEN, new String[0], new int[0]);

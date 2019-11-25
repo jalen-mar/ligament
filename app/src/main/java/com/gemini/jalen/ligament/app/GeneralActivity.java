@@ -24,9 +24,6 @@ import com.gemini.jalen.ligament.databinding.WindowModel;
 import com.gemini.jalen.ligament.util.StatusBarUtil;
 
 public abstract class GeneralActivity<T extends ViewDataBinding> extends AppCompatActivity {
-    public static final int REQUEST_INSTALL = PermissionFragment.REQUEST_INSTALL;
-    public static final int REQUEST_LOCATION = PermissionFragment.REQUEST_LOCATION;
-
     private View contentView;
     protected T binder;
 
