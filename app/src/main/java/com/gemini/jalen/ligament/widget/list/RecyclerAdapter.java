@@ -41,8 +41,9 @@ public abstract class RecyclerAdapter<T, V extends ViewHolder> extends RecyclerV
         this.resId = resId;
     }
 
+    @NonNull
     @Override
-    public V onCreateViewHolder(ViewGroup parent, int resId) {
+    public V onCreateViewHolder(@NonNull ViewGroup parent, int resId) {
         View view = inflater.inflate(resId, parent, false);
         ViewHolder holder;
         if (resId == emptyView) {
@@ -114,8 +115,9 @@ public abstract class RecyclerAdapter<T, V extends ViewHolder> extends RecyclerV
 
     @Override
     public void clear() {
+        int count = list.size();
         list.clear();
-        notifyDataSetChanged();
+        notifyItemRangeRemoved(0, count);
     }
 
     @Override
