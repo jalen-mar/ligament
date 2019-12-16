@@ -18,7 +18,7 @@ public class Validator implements ErrorCallback {
     }
 
     public Validator isEquals(String value1, String value2, String msg) {
-        return check(!(StringUtil.isEmpty(value1) || !value1.equals(value2)), msg);
+        return check(!StringUtil.isEmpty(value1) && value1.equals(value2), msg);
     }
 
     public Validator isCheck(boolean value, String msg) {
