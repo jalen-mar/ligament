@@ -81,6 +81,20 @@ public class GeneralFragment<T extends ViewDataBinding> extends PermissionFragme
     }
 
     @MainThread
+    public <M extends WindowModel> M lease(Class<M> cls) {
+        M result = createViewModel(getActivity()).get(cls);
+        result.getStatus().observe(this, new Observer<Event>() {
+            @Override
+            public void onChanged(@Nullable Event it) {
+                if (it != null) {
+                    it.invoke(GeneralFragment.this);
+                }
+            }
+        });
+        return result;
+    }
+
+    @MainThread
     public <M extends WindowModel> M wrap(final M vm) {
         M result = (M) createViewModel(this, new ViewModelProvider.Factory() {
             @NonNull
