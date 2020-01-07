@@ -18,7 +18,8 @@ import java.util.List;
 
 public abstract class RecyclerAdapter<T, V extends ViewHolder> extends RecyclerView.Adapter<V> implements DataHolder {
     public final List<T> list;
-    private int resId, emptyView;
+    private int[] resId;
+    private int emptyView;
     public final LayoutInflater inflater;
 
     public RecyclerAdapter(LayoutInflater inflater) {
@@ -31,14 +32,18 @@ public abstract class RecyclerAdapter<T, V extends ViewHolder> extends RecyclerV
         emptyView = R.layout.item_empty;
     }
 
-    public RecyclerAdapter(LayoutInflater inflater, int resId) {
+    public RecyclerAdapter(LayoutInflater inflater, int... resId) {
         this(inflater, new ArrayList<T>());
         this.resId = resId;
     }
 
-    public RecyclerAdapter(LayoutInflater inflater, List<T> list, int resId) {
+    public RecyclerAdapter(LayoutInflater inflater, List<T> list, int... resId) {
         this(inflater, list);
         this.resId = resId;
+    }
+
+    public int getEmptyView() {
+        return emptyView;
     }
 
     @NonNull
@@ -46,7 +51,7 @@ public abstract class RecyclerAdapter<T, V extends ViewHolder> extends RecyclerV
     public V onCreateViewHolder(@NonNull ViewGroup parent, int resId) {
         View view = inflater.inflate(resId, parent, false);
         ViewHolder holder;
-        if (resId == emptyView) {
+        if (resId == getEmptyView()) {
             holder = RecyclerHolder.newInstance(view);
         } else {
             try {
@@ -70,9 +75,10 @@ public abstract class RecyclerAdapter<T, V extends ViewHolder> extends RecyclerV
     @Override
     public final int getItemViewType(int position) {
         if (list.size() > position) {
-            return resId;
+            Object obj = list.get(position);
+            return resId[obj instanceof AdapterItem ? ((AdapterItem) obj).toIndex(obj) : 0];
         } else {
-            return emptyView;
+            return getEmptyView();
         }
     }
 
