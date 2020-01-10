@@ -35,7 +35,7 @@ public class PickerAdapter extends RecyclerView.Adapter<Holder> implements View.
 
     public PickerAdapter(List<PickerBean> list, LayoutInflater inflater, View.OnClickListener listener, boolean multiple) {
         this.list = list;
-        this.data = new LinkedList<>();
+        this.data = new LinkedList<>(list);
         this.inflater = inflater;
         this.listener = listener;
         this.multiple = multiple;
