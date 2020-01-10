@@ -10,18 +10,32 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.gemini.jalen.ligament.R;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
 public class PickerAdapter extends RecyclerView.Adapter<Holder> implements View.OnClickListener {
     private List<PickerBean> list;
+    private List<PickerBean> data;
     private LayoutInflater inflater;
     private View.OnClickListener listener;
     private boolean multiple;
     private Set<PickerBean> beans;
 
+    public void setKeyword(String keyword) {
+        keyword = keyword == null ? "" : keyword;
+        data.clear();
+        for (PickerBean bean: list) {
+            if (bean.getName().contains(keyword)) {
+                data.add(bean);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
     public PickerAdapter(List<PickerBean> list, LayoutInflater inflater, View.OnClickListener listener, boolean multiple) {
         this.list = list;
+        this.data = new LinkedList<>();
         this.inflater = inflater;
         this.listener = listener;
         this.multiple = multiple;
@@ -36,7 +50,7 @@ public class PickerAdapter extends RecyclerView.Adapter<Holder> implements View.
 
     @Override
     public void onBindViewHolder(@NonNull Holder holder, int position) {
-        PickerBean bean = list.get(position);
+        PickerBean bean = data.get(position);
         holder.view.setText(bean.getName());
         holder.view.setTag(bean);
         holder.view.setSelected(beans.contains(bean));
@@ -45,7 +59,7 @@ public class PickerAdapter extends RecyclerView.Adapter<Holder> implements View.
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return data.size();
     }
 
     @Override

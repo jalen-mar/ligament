@@ -5,6 +5,20 @@
     android:background="#45000000"
     android:gravity="bottom">
 
+    <EditText android:background="@color/white"
+        android:hint="请输入关键字"
+        android:id="@+id/keyword"
+        android:textColor="@color/pickerColor"
+        android:textSize="@dimen/text"
+        android:textColorHint="@color/hint"
+        android:padding="@dimen/padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View android:background="@color/background"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
     <LinearLayout android:orientation="horizontal"
         android:layout_width="match_parent"
         android:background="@color/white"

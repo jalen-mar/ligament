@@ -1,12 +1,15 @@
 package com.gemini.jalen.ligament.widget;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 
@@ -26,7 +29,7 @@ import com.gemini.jalen.ligament.widget.picker.PickerProvider;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Picker extends DialogFragment implements View.OnClickListener {
+public class Picker extends DialogFragment implements View.OnClickListener, TextWatcher {
     private List<PickerBean> ids;
     private PickerProvider provider;
     private SenderHandler sender;
@@ -68,6 +71,8 @@ public class Picker extends DialogFragment implements View.OnClickListener {
         recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         ids = new ArrayList<>();
         provider.loadItem(null, sender);
+
+        ((EditText) view.findViewById(R.id.keyword)).addTextChangedListener(this);
 
         if (multiple) {
             view = view.findViewById(R.id.submit);
@@ -121,6 +126,19 @@ public class Picker extends DialogFragment implements View.OnClickListener {
             }
             ids.removeAll(list);
             recycler.setAdapter((RecyclerView.Adapter) v.getTag());
+        }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        if (recycler.getAdapter() instanceof PickerAdapter) {
+            ((PickerAdapter) recycler.getAdapter()).setKeyword(s.toString());
         }
     }
 
