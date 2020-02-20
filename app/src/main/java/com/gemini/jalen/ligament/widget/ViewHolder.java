@@ -27,6 +27,7 @@ public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickL
         targetList = new SparseArray<>();
         children = new SparseArray<>();
         data = new HashMap<>();
+        itemView.setTag(this);
     }
 
     public void setData(String key, Object obj) {

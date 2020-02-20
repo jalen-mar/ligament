@@ -8,13 +8,15 @@ public class WindowModel extends ViewModel {
     private MutableLiveData<Event> status;
     private MutableLiveData<Boolean> loading;
     private ObservableBoolean refresh;
-    private ObservableBoolean canLoad;
+    private ObservableBoolean loadable;
+    private int times;
 
     public WindowModel() {
         status = new MutableLiveData<>();
         loading = new MutableLiveData<>();
         refresh = new ObservableBoolean(false);
-        canLoad = new ObservableBoolean(true);
+        loadable = new ObservableBoolean(true);
+        times = 0;
     }
 
     public WindowModel init() {
@@ -33,16 +35,22 @@ public class WindowModel extends ViewModel {
         return refresh;
     }
 
-    public ObservableBoolean getCanLoad() {
-        return canLoad;
+    public ObservableBoolean isLoadable() {
+        return loadable;
     }
 
     public void load() {
-        loading.setValue(true);
+        if (0 == times++) {
+            loadable.set(false);
+            loading.setValue(true);
+        }
     }
 
     public void loadCompleted() {
-        loading.setValue(false);
+        if (--times == 0) {
+            loadable.set(true);
+            loading.setValue(false);
+        }
     }
 
     public boolean isRefresh() {
@@ -50,6 +58,7 @@ public class WindowModel extends ViewModel {
     }
 
     public void refresh(boolean refresh) {
+        loadable.set(!refresh);
         this.refresh.set(refresh);
     }
 

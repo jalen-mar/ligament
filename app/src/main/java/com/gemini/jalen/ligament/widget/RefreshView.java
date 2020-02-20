@@ -83,19 +83,19 @@ public class RefreshView extends SwipeRefreshLayout {
         return super.onInterceptTouchEvent(ev);
     }
 
-    @BindingAdapter("refreshing")
+    @BindingAdapter("app:refreshing")
     public static void setRefreshing(SwipeRefreshLayout view, boolean refreshing) {
         if (view.isRefreshing() != refreshing) {
             view.setRefreshing(refreshing);
         }
     }
 
-    @InverseBindingAdapter(attribute = "refreshing", event = "refreshingAttrChanged")
+    @InverseBindingAdapter(attribute = "app:refreshing", event = "refreshingAttrChanged")
     public static boolean isRefreshing(SwipeRefreshLayout view) {
         return view.isRefreshing();
     }
 
-    @BindingAdapter(value = {"onRefreshListener", "refreshingAttrChanged"}, requireAll = false)
+    @BindingAdapter(value = {"app:onRefreshListener", "refreshingAttrChanged"}, requireAll = false)
     public static void setOnRefreshListener(SwipeRefreshLayout view, final OnRefreshListener listener,
                                             final InverseBindingListener refreshingAttrChanged) {
         OnRefreshListener newValue = new OnRefreshListener() {

@@ -103,7 +103,7 @@ public class AutomaticLayout extends ViewGroup {
 
         for(int i = 0; i < count; i++) {
             View child = getChildAt(i);
-            if (child.getVisibility() == GONE) continue;
+//            if (child.getVisibility() == GONE) continue;
             MarginLayoutParams params = (MarginLayoutParams) child.getLayoutParams();
             int childMeasureSpec = widthMeasureSpec;
             if (item > 0) {
@@ -156,15 +156,16 @@ public class AutomaticLayout extends ViewGroup {
 
     private void layoutHorizontal() {
         int rowCount = children.size();
-        int paddingLeft = getPaddingLeft();
+        int paddingStart = getPaddingLeft();
         int childTop = getPaddingTop();
         for(int r = 0; r < rowCount; r++) {
             ArrayList<View> row = children.get(r);
             int columnCount = row.size();
-            int childLeft = paddingLeft;
+            int childLeft = paddingStart;
             int lineHeight = 0;
             for(int c = 0; c < columnCount; c++) {
                 View child = row.get(c);
+                if (child.getVisibility() == GONE) continue;
                 MarginLayoutParams params = (MarginLayoutParams) child.getLayoutParams();
                 child.layout(childLeft + params.leftMargin, childTop + params.topMargin,
                         childLeft + params.leftMargin + child.getMeasuredWidth(),

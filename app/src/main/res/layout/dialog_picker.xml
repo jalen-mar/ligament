@@ -10,6 +10,7 @@
         android:id="@+id/keyword"
         android:textColor="@color/pickerColor"
         android:textSize="@dimen/text"
+        android:visibility="gone"
         android:textColorHint="@color/hint"
         android:padding="@dimen/padding"
         android:layout_width="match_parent"

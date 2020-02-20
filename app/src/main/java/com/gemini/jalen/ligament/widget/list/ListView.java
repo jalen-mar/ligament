@@ -57,17 +57,17 @@ public class ListView extends RecyclerView {
         }
     }
 
-    @BindingAdapter("loading")
-    public static void setLoading(RecyclerView view, boolean loading) {
-        view.setTag(-1, !loading);
+    @BindingAdapter("app:loadable")
+    public static void setLoadable(RecyclerView view, boolean loadable) {
+        view.setTag(-1, loadable);
     }
 
-    @InverseBindingAdapter(attribute = "loading", event = "loadingAttrChanged")
-    public static boolean isLoad(RecyclerView view) {
-        return !(boolean) view.getTag(-1);
+    @InverseBindingAdapter(attribute = "app:loadable", event = "loadingAttrChanged")
+    public static boolean isLoadable(RecyclerView view) {
+        return (boolean) view.getTag(-1);
     }
 
-    @BindingAdapter(value = {"setOnLoadListener", "loadingAttrChanged"}, requireAll = false)
+    @BindingAdapter(value = {"app:onLoadListener", "loadingAttrChanged"}, requireAll = false)
     public static void setLoadListener(RecyclerView view, final RecyclerLoader listener,
                                        final InverseBindingListener refreshingAttrChanged) {
         OnScrollListener newValue = new OnScrollListener() {
@@ -78,7 +78,7 @@ public class ListView extends RecyclerView {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 Boolean loading = (Boolean) recyclerView.getTag(-1);
                 RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
-                if (!loading && manager != null) {
+                if (loading != null && loading && manager != null) {
                     if (type == 0) {
                         type = manager instanceof LinearLayoutManager ? 1 :
                                 manager instanceof StaggeredGridLayoutManager ? 2 : -1;
@@ -86,7 +86,7 @@ public class ListView extends RecyclerView {
                         index = index == -1 ? 1 : index;
                     }
                     if (canLoad(recyclerView.getLayoutManager(), type, index)) {
-                        recyclerView.setTag(-1, true);
+                        recyclerView.setTag(-1, false);
                         refreshingAttrChanged.onChange();
                         if (listener != null)
                             listener.onLoad();

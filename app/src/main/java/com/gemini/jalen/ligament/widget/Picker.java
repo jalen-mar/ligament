@@ -39,8 +39,14 @@ public class Picker extends DialogFragment implements View.OnClickListener, Text
     private HorizontalScrollView scrollView;
     private ViewGroup toolbar;
     private RecyclerView recycler;
+    private boolean filter;
 
     public Picker() {
+        this(false);
+    }
+
+    public Picker(boolean filter) {
+        this.filter = filter;
         sender = new SenderHandler();
     }
 
@@ -59,6 +65,7 @@ public class Picker extends DialogFragment implements View.OnClickListener, Text
         View view = inflater.inflate(R.layout.dialog_picker, container, false);
         ViewGroup.LayoutParams params = view.getLayoutParams();
         window.setLayout(params.width, params.height);
+        view.findViewById(R.id.keyword).setVisibility(filter ? View.VISIBLE : View.GONE);
         return view;
     }
 
@@ -69,8 +76,6 @@ public class Picker extends DialogFragment implements View.OnClickListener, Text
         toolbar = view.findViewById(R.id.picker_toolbar);
         recycler = view.findViewById(R.id.list);
         recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-        ids = new ArrayList<>();
-        provider.loadItem(null, sender);
 
         ((EditText) view.findViewById(R.id.keyword)).addTextChangedListener(this);
 
@@ -78,6 +83,15 @@ public class Picker extends DialogFragment implements View.OnClickListener, Text
             view = view.findViewById(R.id.submit);
             view.setOnClickListener(this);
             view.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (ids == null) {
+            ids = new ArrayList<>();
+            provider.loadItem(null, sender);
         }
     }
 
