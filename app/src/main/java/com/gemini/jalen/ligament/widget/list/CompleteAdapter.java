@@ -134,7 +134,11 @@ public class CompleteAdapter extends RecyclerView.Adapter<ViewHolder> {
         int index = this.list.size() - footer;
         this.list.addAll(index, list);
         item += list.size();
-        notifyItemRangeInserted(index, list.size());
+        if (getItemCount() == 0) {
+            notifyDataSetChanged();
+        } else {
+            notifyItemRangeInserted(index, list.size());
+        }
     }
 
     public void addItem(Object obj) {
@@ -164,7 +168,11 @@ public class CompleteAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     public void addHeadItem(List<Object> list) {
         this.list.addAll(header, list);
-        notifyItemRangeInserted(header, list.size());
+        if (getItemCount() == 0) {
+            notifyDataSetChanged();
+        } else {
+            notifyItemRangeInserted(header, list.size());
+        }
         header += list.size();
     }
 
@@ -185,7 +193,11 @@ public class CompleteAdapter extends RecyclerView.Adapter<ViewHolder> {
     public void addFootItem(List<Object> list) {
         int index = this.list.size();
         this.list.addAll(list);
-        notifyItemRangeInserted(index, list.size());
+        if (getItemCount() == 0) {
+            notifyDataSetChanged();
+        } else {
+            notifyItemRangeInserted(index, list.size());
+        }
         footer += list.size();
     }
 

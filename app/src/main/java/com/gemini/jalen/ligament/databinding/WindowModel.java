@@ -35,7 +35,7 @@ public class WindowModel extends ViewModel {
         return refresh;
     }
 
-    public ObservableBoolean isLoadable() {
+    public ObservableBoolean getLoadable() {
         return loadable;
     }
 
