@@ -136,15 +136,15 @@ public abstract class GeneralActivity<T extends ViewDataBinding> extends AppComp
         PermissionFragment.get(this).checkBluetoothPermission();
     }
 
-    protected void checkGPSPermission() {
-        PermissionFragment.get(this).checkGPSPermission();
+    protected boolean checkGPSPermission() {
+        return PermissionFragment.get(this).checkGPSPermission();
     }
 
-    protected void canRequestPackageInstalls() {
-        PermissionFragment.get(this).canRequestPackageInstalls();
+    protected boolean canRequestPackageInstalls() {
+        return PermissionFragment.get(this).canRequestPackageInstalls();
     }
 
-    protected void canWriteSettings() {
-        PermissionFragment.get(this).canRequestPackageInstalls();
+    protected boolean canWriteSettings() {
+        return PermissionFragment.get(this).canRequestPackageInstalls();
     }
 }

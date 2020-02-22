@@ -35,6 +35,22 @@ public class StringUtil {
     private static String[] NUMBER = { "零", "一", "二", "三", "四", "五", "六", "七", "八", "九" };
     private static String[] UNIT = { "十", "百", "千", "万", "十", "百", "千", "亿", "十", "百", "千" };
 
+    public static String encodeMobile(String mobile) {
+        return isMobile(mobile) ? encode(0, 5, mobile) : mobile;
+    }
+
+    public static String encode(int start, int end, String value) {
+        start += 3;
+        end += 2;
+        if (between(value,end + 1, Integer.MAX_VALUE)) {
+            int len = end - start;
+            StringBuffer buff = new StringBuffer();
+            for (int i = 0; i < len; i++)
+                buff.append('*');
+            return value.substring(0, start) + buff.toString() + value.substring(end);
+        }
+        return value;
+    }
 
     public static boolean isEmpty(String value) {
         boolean empty = false;

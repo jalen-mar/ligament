@@ -103,7 +103,7 @@ public class AutomaticLayout extends ViewGroup {
 
         for(int i = 0; i < count; i++) {
             View child = getChildAt(i);
-//            if (child.getVisibility() == GONE) continue;
+            if (child.getVisibility() == GONE) continue;
             MarginLayoutParams params = (MarginLayoutParams) child.getLayoutParams();
             int childMeasureSpec = widthMeasureSpec;
             if (item > 0) {
