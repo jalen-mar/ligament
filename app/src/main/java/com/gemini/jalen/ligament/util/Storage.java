@@ -24,12 +24,31 @@ public class Storage implements StringUtil.DeviceStorage {
     }
 
     public String getCurrentUserToken() {
-        return getUserStorage().getString("current_user_authentication", null);
+        return getUserStorage().getString("current_user_authentication", "");
     }
 
-    public void save(String userId, String token) {
+    public Storage save(String userId, String token) {
         getGlobalStorage().edit().putString("current_user_id", userId).apply();
         getUserStorage().edit().putString("current_user_authentication", token).apply();
+        return this;
+    }
+
+    public String getUserData(String key) {
+        return getUserStorage().getString(key, "");
+    }
+
+    public Storage saveUserData(String key, String value) {
+        getUserStorage().edit().putString(key, value).apply();
+        return this;
+    }
+
+    public String getGlobalData(String key) {
+        return getGlobalStorage().getString(key, "");
+    }
+
+    public Storage saveGlobalData(String key, String value) {
+        getGlobalStorage().edit().putString(key, value).apply();
+        return this;
     }
 
     public void delete() {
@@ -39,7 +58,7 @@ public class Storage implements StringUtil.DeviceStorage {
 
     @Override
     public String getDeviceId() {
-        return getGlobalStorage().getString("APP_DEVICE_ID", null);
+        return getGlobalStorage().getString("APP_DEVICE_ID", "");
     }
 
     @Override

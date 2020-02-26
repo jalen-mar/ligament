@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -134,6 +135,10 @@ public class AutomaticLayout extends ViewGroup {
             if(i == count - 1) {
                 height += lineHeight;
             }
+        }
+
+        if (height == 0) {
+            height = lineHeight;
         }
 
         if(line.size() > 0) children.add(line);

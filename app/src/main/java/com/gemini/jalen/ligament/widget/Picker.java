@@ -1,6 +1,8 @@
 package com.gemini.jalen.ligament.widget;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
@@ -30,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Picker extends DialogFragment implements View.OnClickListener, TextWatcher {
+    static Handler handler = new Handler(Looper.getMainLooper());
     private List<PickerBean> ids;
     private PickerProvider provider;
     private SenderHandler sender;
@@ -76,6 +79,7 @@ public class Picker extends DialogFragment implements View.OnClickListener, Text
         toolbar = view.findViewById(R.id.picker_toolbar);
         recycler = view.findViewById(R.id.list);
         recycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        ids = new ArrayList<>();
 
         ((EditText) view.findViewById(R.id.keyword)).addTextChangedListener(this);
 
@@ -84,15 +88,12 @@ public class Picker extends DialogFragment implements View.OnClickListener, Text
             view.setOnClickListener(this);
             view.setVisibility(View.VISIBLE);
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (ids == null) {
-            ids = new ArrayList<>();
-            provider.loadItem(null, sender);
-        }
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                provider.loadItem(null, sender);
+            }
+        }, 25);
     }
 
     public void setCallback(PickerCallback callback) {
