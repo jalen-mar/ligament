@@ -2,8 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#45000000"
-    android:gravity="bottom">
+    android:background="#45000000">
+
+    <View android:layout_weight="1"
+        android:background="@android:color/transparent"
+        android:id="@+id/closer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/no" />
 
     <EditText android:background="@color/white"
         android:hint="请输入关键字"

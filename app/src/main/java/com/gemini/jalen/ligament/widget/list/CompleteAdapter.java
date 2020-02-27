@@ -117,6 +117,18 @@ public class CompleteAdapter extends RecyclerView.Adapter<ViewHolder> {
         return count;
     }
 
+    public int getCount() {
+        return item;
+    }
+
+    public int getHeaderCount() {
+        return header;
+    }
+
+    public int getFooterCount() {
+        return footer;
+    }
+
     @Override
     public long getItemId(int position) {
         return position == -1 ? 5 : super.getItemId(position);

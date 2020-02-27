@@ -52,6 +52,7 @@ public class AutomaticLayout extends ViewGroup {
 
     public void setColumn(int column) {
         this.column = column;
+        requestLayout();
     }
 
     public void setOrientation(int orientation) {
@@ -131,15 +132,8 @@ public class AutomaticLayout extends ViewGroup {
             }
 
             line.add(child);
-
-            if(i == count - 1) {
-                height += lineHeight;
-            }
         }
-
-        if (height == 0) {
-            height = lineHeight;
-        }
+        height += lineHeight;
 
         if(line.size() > 0) children.add(line);
         if(mode == MeasureSpec.EXACTLY)

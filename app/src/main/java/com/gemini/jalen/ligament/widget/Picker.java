@@ -43,13 +43,19 @@ public class Picker extends DialogFragment implements View.OnClickListener, Text
     private ViewGroup toolbar;
     private RecyclerView recycler;
     private boolean filter;
+    private boolean close;
 
     public Picker() {
-        this(false);
+        this(false, true);
     }
 
-    public Picker(boolean filter) {
+    public Picker(boolean close) {
+        this(false, close);
+    }
+
+    public Picker(boolean filter, boolean close) {
         this.filter = filter;
+        this.close = close;
         sender = new SenderHandler();
     }
 
@@ -69,6 +75,14 @@ public class Picker extends DialogFragment implements View.OnClickListener, Text
         ViewGroup.LayoutParams params = view.getLayoutParams();
         window.setLayout(params.width, params.height);
         view.findViewById(R.id.keyword).setVisibility(filter ? View.VISIBLE : View.GONE);
+        view.findViewById(R.id.closer).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (close) {
+                    dismiss();
+                }
+            }
+        });
         return view;
     }
 
