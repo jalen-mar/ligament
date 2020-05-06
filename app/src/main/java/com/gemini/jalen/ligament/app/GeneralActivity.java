@@ -120,7 +120,7 @@ public abstract class GeneralActivity<T extends ViewDataBinding> extends AppComp
         int resId = getLayout();
         View contentView = null;
         if (resId != View.NO_ID) {
-            contentView = getLayoutInflater().inflate(getLayout(), parentView, false);
+            contentView = getLayoutInflater().inflate(resId, parentView, false);
             if (isSupportDataBinding()) {
                 binder = DataBindingUtil.bind(contentView);
             }
