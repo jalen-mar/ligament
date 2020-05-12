@@ -56,7 +56,7 @@ public class EventUtil {
         if (data != null) {
             data.removeObservers(owner);
             if (!data.hasObservers()) {
-                observables.remove(data);
+                observables.remove(action);
             }
         }
     }
