@@ -5,8 +5,8 @@ import android.content.Context
 
 class DialogUtil {
     companion object {
-        fun alert(context: Context, title: String, content: String, func: () -> Unit) {
-            val builder = AlertDialog.Builder(context)
+        fun alert(context: Context, title: String, content: String, themeId: Int, func: () -> Unit) {
+            val builder = if (themeId != 0) AlertDialog.Builder(context, themeId) else AlertDialog.Builder(context)
             builder.setTitle(title)
             builder.setMessage(content)
             builder.setPositiveButton("确定") { _, _ ->
@@ -16,11 +16,11 @@ class DialogUtil {
             builder.show()
         }
 
-        fun confirm(context: Context, title: String, content: String, func1: () -> Unit, func2: () -> Unit) {
-            val builder = AlertDialog.Builder(context)
+        fun confirm(context: Context, title: String, content: String, themeId: Int, func1: () -> Unit, func2: () -> Unit) {
+            val builder = if (themeId != 0) AlertDialog.Builder(context, themeId) else AlertDialog.Builder(context)
             builder.setTitle(title)
             builder.setMessage(content)
-            builder.setPositiveButton("通过") { _, _ ->
+            builder.setPositiveButton("确定") { _, _ ->
                 func1.invoke()
             }
             builder.setNeutralButton("取消") { _, _ -> }

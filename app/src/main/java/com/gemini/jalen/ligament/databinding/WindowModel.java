@@ -47,14 +47,18 @@ public class WindowModel extends ViewModel {
     }
 
     public void loadCompleted() {
-        if (--times == 0) {
+        if (times != 0 && --times == 0) {
             loadable.set(true);
             loading.setValue(false);
         }
     }
 
-    public boolean isRefresh() {
+    public boolean isRefreshing() {
         return refresh.get();
+    }
+
+    public void unableLoad(boolean unable) {
+        loadable.set(unable);
     }
 
     public void refresh(boolean refresh) {

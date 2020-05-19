@@ -158,7 +158,6 @@ public class AppUtil implements Application.ActivityLifecycleCallbacks {
             context.startActivity(intent);
             if (task != null)
                 task.run();
-            android.os.Process.killProcess(android.os.Process.myPid());
         }
     }
 

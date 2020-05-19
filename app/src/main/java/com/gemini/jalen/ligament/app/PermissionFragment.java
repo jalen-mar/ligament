@@ -167,11 +167,6 @@ public class PermissionFragment extends LifecycleFragment {
                     getActivity().startActivityForResult(intent, RESULT_INSTALL);
                 }
             }
-        } else {
-            ContentResolver resolver = getContext().getContentResolver();
-            if (Settings.Secure.getInt(resolver, Settings.Secure.INSTALL_NON_MARKET_APPS, 0) == 0) {
-                Settings.Secure.putInt(resolver, Settings.Secure.INSTALL_NON_MARKET_APPS, 1);
-            }
         }
         return can;
     }
